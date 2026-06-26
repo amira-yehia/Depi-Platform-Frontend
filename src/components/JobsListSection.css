@@ -1,0 +1,6 @@
+.jobsListSection{
+  display: flex;
+  flex-direction: column; /* في الصورة باين كده */
+  gap: 14px;
+  padding: 24px;
+}

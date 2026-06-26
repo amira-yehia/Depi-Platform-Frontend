@@ -1,0 +1,14 @@
+.smb{
+  height: 46px;
+  border-radius: 999px;
+  background: #ff7a2f;
+  border: 0;
+  color: #fff;
+  font-weight: 950;
+  cursor: pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+}

@@ -1,0 +1,39 @@
+.pworkShell{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(10, 42, 72, 0.35);
+  padding: 18px;
+}
+.pworkShell__head{
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.pworkShell__title{
+  margin:0;
+  font-size: 20px;
+  font-weight: 1000;
+}
+.pworkShell__sub{
+  margin-top: 6px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 850;
+  font-size: 13px;
+}
+.pworkShell__right{
+  color: #ff7a2f;
+  font-weight: 950;
+  cursor:pointer;
+  padding-top: 8px;
+  white-space: nowrap;
+}
+.pworkShell__grid{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 980px){
+  .pworkShell__grid{ grid-template-columns: 1fr; }
+}

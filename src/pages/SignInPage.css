@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+    --bg-deep:        #0d1b2e;
+    --bg-mid:         #12263f;
+    --card-bg:        rgba(15, 30, 50, 0.72);
+    --card-border:    rgba(255, 255, 255, 0.08);
+    --orange:         #f47c20;
+    --orange-hover:   #e06b10;
+    --orange-light:   rgba(244, 124, 32, 0.15);
+    --white:          #ffffff;
+    --muted:          rgba(255, 255, 255, 0.50);
+    --input-bg:       rgba(255, 255, 255, 0.05);
+    --input-border:   rgba(255, 255, 255, 0.12);
+    --input-focus:    rgba(244, 124, 32, 0.55);
+    --social-border:  rgba(255, 255, 255, 0.15);
+    --radius-card:    18px;
+    --radius-input:   10px;
+    --radius-btn:     10px;
+    }
+
+    .auth-wrapper {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-deep);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    }
+
+    /* ── Atmospheric background glows ── */
+    .bg-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    }
+
+    .bg-glow::before {
+    content: '';
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 124, 32, 0.18) 0%, transparent 70%);
+    top: -120px;
+    left: -80px;
+    filter: blur(60px);
+    }
+
+    .bg-glow::after {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30, 80, 160, 0.22) 0%, transparent 70%);
+    bottom: -80px;
+    right: -60px;
+    filter: blur(60px);
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 24px 16px;
+    width: 100%;
+    }
+
+    /* ── Brand logo (full horizontal SVG) ── */
+    .brand-logo {
+    width: 300px;
+    height: auto;
+    animation: fadeDown 0.6s ease both;
+    }
+
+    @media (max-width: 500px) {
+    .brand-logo {
+        width: 240px;
+    }
+    }
+
+    /* ── Card ── */
+    .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 44px 48px 40px;
+    width: 100%;
+    max-width: 440px;
+    animation: fadeUp 0.65s ease both 0.1s;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.45),
+        0 1px 0 rgba(255,255,255,0.06) inset;
+    }
+
+    /* ── Card header ── */
+    .card-header {
+    text-align: center;
+    margin-bottom: 32px;
+    }
+
+    .card-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+    }
+
+    .card-header p {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 300;
+    }
+
+    /* ── Form fields ── */
+    .field {
+    margin-bottom: 20px;
+    }
+
+    .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.80);
+    margin-bottom: 8px;
+    }
+
+    .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    }
+
+    .input-wrap .icon-left {
+    position: absolute;
+    left: 14px;
+    color: var(--muted);
+    display: flex;
+    pointer-events: none;
+    }
+
+    .input-wrap .icon-right {
+    position: absolute;
+    right: 14px;
+    color: var(--muted);
+    display: flex;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.2s;
+    }
+
+    .input-wrap .icon-right:hover {
+    color: var(--white);
+    }
+
+    .input-wrap input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-input);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    padding: 13px 42px 13px 42px;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+
+    .input-wrap input::placeholder {
+    color: rgba(255,255,255,0.25);
+    }
+
+    .input-wrap input:focus {
+    border-color: var(--input-focus);
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 0 0 3px rgba(244,124,32,0.12);
+    }
+
+    /* ── Forgot password ── */
+    .forgot-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    }
+
+    .forgot-row a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--orange);
+    text-decoration: none;
+    transition: opacity 0.2s;
+    }
+
+    .forgot-row a:hover {
+    opacity: 0.8;
+    }
+
+    /* ── Sign in button ── */
+    .btn-signin {
+    width: 100%;
+    padding: 14px;
+    background: var(--orange);
+    border: none;
+    border-radius: var(--radius-btn);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+    box-shadow: 0 4px 18px rgba(244,124,32,0.35);
+    }
+
+    .btn-signin:hover {
+    background: var(--orange-hover);
+    box-shadow: 0 6px 24px rgba(244,124,32,0.45);
+    transform: translateY(-1px);
+    }
+
+    .btn-signin:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 12px rgba(244,124,32,0.3);
+    }
+
+    .btn-signin:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+    transform: none;
+    }
+
+    .signinStatus {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    }
+
+    .signinStatus--success {
+    background: rgba(46, 204, 113, 0.16);
+    border: 1px solid rgba(46, 204, 113, 0.55);
+    color: rgba(224, 255, 236, 0.98);
+    }
+
+    .signinStatus--error {
+    background: rgba(255, 99, 71, 0.16);
+    border: 1px solid rgba(255, 99, 71, 0.58);
+    color: rgba(255, 230, 226, 0.98);
+    }
+
+    /* ── Divider ── */
+    .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 26px 0;
+    color: var(--muted);
+    font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+    }
+
+    /* ── Social buttons ── */
+    .social-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    }
+
+    .btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--social-border);
+    border-radius: var(--radius-btn);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.22s, border-color 0.22s, transform 0.15s;
+    }
+
+    .btn-social:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.28);
+    transform: translateY(-1px);
+    }
+
+    .btn-social:active {
+    transform: translateY(0);
+    }
+
+    .btn-social svg {
+    flex-shrink: 0;
+    }
+
+    /* ── Sign up link ── */
+    .signup-row {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 14px;
+    color: var(--muted);
+    }
+
+    .signup-row a {
+    color: var(--orange);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: opacity 0.2s;
+    }
+
+    .signup-row a:hover {
+    opacity: 0.8;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+    .card {
+        padding: 36px 24px 32px;
+        border-radius: 14px;
+    }
+    }

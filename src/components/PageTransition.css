@@ -1,0 +1,30 @@
+.pageTransition {
+  min-height: 100%;
+}
+
+.pageTransition--animating {
+  animation: pageTransitionEnter 0.65s ease both 0.1s;
+  will-change: transform, opacity;
+}
+
+@keyframes pageTransitionEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -24px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageTransition--animating,
+  .pageTransition--reduced {
+    animation: none;
+    transform: none;
+    opacity: 1;
+    will-change: auto;
+  }
+}

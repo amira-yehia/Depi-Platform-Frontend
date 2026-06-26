@@ -1,0 +1,217 @@
+.contractsPage {
+  min-height: 100vh;
+  padding: 42px 32px 64px;
+  background:
+    radial-gradient(circle at 48% 42%, rgba(63, 96, 137, 0.42), transparent 34%),
+    var(--nh-navy);
+}
+
+.contractsPage__container {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.contractsPage__header {
+  margin-bottom: 28px;
+}
+
+.contractsPage__header h1 {
+  margin: 0 0 8px;
+  color: var(--nh-white);
+  font-size: clamp(28px, 4vw, 34px);
+  font-weight: 950;
+}
+
+.contractsPage__header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.contractsPage__list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.contractMilestoneCard {
+  padding: 28px;
+  border-radius: 18px;
+  color: var(--nh-white);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+    rgba(13, 38, 71, 0.9);
+  border: 1px solid rgba(63, 96, 137, 0.48);
+  box-shadow: var(--nh-shadow-soft);
+}
+
+.contractMilestoneCard__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.contractMilestoneCard__header h2 {
+  margin: 0 0 8px;
+  color: var(--nh-white);
+  font-size: 25px;
+  font-weight: 950;
+}
+
+.contractMilestoneCard__header p,
+.contractMilestoneCard__header span {
+  display: block;
+  margin: 0;
+  color: var(--nh-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.contractMilestoneCard__money {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.contractMilestoneCard__money strong {
+  display: block;
+  color: var(--nh-white);
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.contractMilestoneCard__money span {
+  color: var(--nh-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.contractMilestoneCard__progress {
+  margin-bottom: 22px;
+}
+
+.contractMilestoneCard__progressTop {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--nh-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.contractMilestoneCard__progressTop strong {
+  color: var(--nh-muted-2);
+}
+
+.contractMilestoneCard__progressTrack {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.contractMilestoneCard__progressFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2f80ed, #1d6fe8);
+}
+
+.contractMilestoneCard__milestones h3 {
+  margin: 0 0 12px;
+  color: var(--nh-white);
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.contractMilestoneCard__milestones ul {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.milestoneItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.milestoneItem__content {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.milestoneItem__content > i {
+  margin-top: 3px;
+  color: var(--nh-muted);
+}
+
+.milestoneItem--done .milestoneItem__content > i {
+  color: var(--nh-green);
+}
+
+.milestoneItem--active .milestoneItem__content > i {
+  color: var(--nh-orange);
+}
+
+.milestoneItem h4 {
+  margin: 0 0 3px;
+  color: var(--nh-white);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.milestoneItem p {
+  margin: 0;
+  color: var(--nh-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.milestoneItem strong {
+  flex: 0 0 auto;
+  color: var(--nh-green);
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.milestoneItem__action {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--nh-orange);
+  color: var(--nh-white);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.milestoneItem__action:hover {
+  background: var(--nh-orange-light);
+}
+
+@media (max-width: 768px) {
+  .contractsPage {
+    padding: 34px 18px 52px;
+  }
+
+  .contractMilestoneCard {
+    padding: 22px;
+  }
+
+  .contractMilestoneCard__header {
+    flex-direction: column;
+  }
+
+  .contractMilestoneCard__money {
+    text-align: left;
+  }
+}

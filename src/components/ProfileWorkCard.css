@@ -1,0 +1,64 @@
+.pwork{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(5, 28, 52, 0.35);
+  overflow: hidden;
+}
+.pwork__imgWrap{
+  position: relative;
+  height: 150px;
+}
+.pwork__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+}
+.pwork__pill{
+  position:absolute;
+  left: 12px;
+  top: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  font-weight: 1000;
+  font-size: 12px;
+  color: #fff;
+}
+.pwork__body{
+  padding: 14px;
+}
+.pwork__titleRow{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pwork__title{
+  margin:0;
+  font-size: 15px;
+  font-weight: 1000;
+}
+.pwork__arrow{ color: rgba(255,255,255,0.7); }
+.pwork__desc{
+  margin-top: 8px;
+  color: rgba(255,255,255,0.68);
+  font-weight: 850;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.pwork__tags{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pwork__tag{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(3,20,40,0.18);
+  color: rgba(255,255,255,0.86);
+  font-weight: 950;
+  font-size: 11.5px;
+}

@@ -1,0 +1,131 @@
+.dashboardPage {
+  min-height: 100vh;
+  padding: 46px 32px 64px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(63, 96, 137, 0.42), transparent 32%),
+    var(--nh-navy);
+}
+
+.dashboardPage__container {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.dashboardPage__header {
+  margin-bottom: 34px;
+}
+
+.dashboardPage__header h1 {
+  margin: 0 0 8px;
+  color: var(--nh-white);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 950;
+  letter-spacing: -0.5px;
+}
+
+.dashboardPage__header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.dashboardPage__statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 42px;
+}
+
+.dashboardPage__contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(310px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.dashboardPage__sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.dashboardPage__sectionHeader h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--nh-white);
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.dashboardPage__sectionHeader h2 i {
+  color: var(--nh-orange-light);
+}
+
+.dashboardPage__sectionHeader a {
+  color: var(--nh-orange);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.dashboardPage__jobsList,
+.dashboardPage__contractsList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboardPage__viewAllBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--nh-white);
+  font-size: 15px;
+  font-weight: 900;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: 0.2s ease;
+}
+
+.dashboardPage__viewAllBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--nh-white);
+}
+
+@media (max-width: 1180px) {
+  .dashboardPage__statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboardPage__contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardPage__contractsList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardPage {
+    padding: 34px 18px 52px;
+  }
+
+  .dashboardPage__statsGrid,
+  .dashboardPage__contractsList {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardPage__sectionHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

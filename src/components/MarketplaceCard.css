@@ -1,0 +1,185 @@
+.mcard {
+  /* عشان الـ pseudo element */
+  position: relative;
+
+  width: 100%;
+  background: #214a6a;
+  border: 2px solid #fe995b;
+  border-radius: 14px;
+
+  padding: 16px 18px;
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+}
+
+.mcard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* لمعة خفيفة جدًا زي الصورة بدون ما تبهت اللون */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.00) 45%
+  );
+}
+
+.mcard__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mcard__titleWrap {
+  min-width: 0;
+}
+
+.mcard__titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mcard__title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+/* Recommended badge (زي الصورة) */
+.mcard__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  background: #ff7a2f;
+  color: #0b1724;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.mcard__badge i {
+  font-size: 12px;
+}
+
+/* Score pill */
+.mcard__scorePill {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+
+  background: #ff7a2f;
+  color: #0b1724;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.mcard__score {
+  font-weight: 1000;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.mcard__scoreLabel {
+  font-weight: 1000;
+  font-size: 9px;
+}
+
+/* Description */
+.mcard__desc {
+  margin: 10px 0 12px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* Tags row */
+.mcard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.mcard__tag {
+  padding: 5px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Footer: meta left + button right */
+.mcard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mcard__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.mcard__metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 11.5px;
+  font-weight: 800;
+
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.mcard__metaItem i {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+.mcard__btn {
+  background: #ff7a2f;
+  border: none;
+
+  color: #fff;
+  font-weight: 950;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  font-size: 12.5px;
+
+  cursor: pointer;
+  box-shadow: 0 12px 22px rgba(255, 122, 47, 0.18);
+}
+
+.mcard__btn:hover {
+  filter: brightness(1.05);
+}

@@ -1,0 +1,15 @@
+.appShell {
+  min-height: 100vh;
+  background: var(--nh-bg);
+}
+
+.appShell__main {
+  min-height: 100vh;
+  margin-left: var(--nh-sidebar-width);
+}
+
+@media (max-width: 768px) {
+  .appShell__main {
+    margin-left: var(--nh-sidebar-mobile-width);
+  }
+}

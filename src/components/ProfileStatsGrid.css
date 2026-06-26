@@ -1,0 +1,25 @@
+.psStats{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.psStats__card{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(10, 42, 72, 0.25);
+  padding: 16px 12px;
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.psStats__card i{ color: rgba(255,255,255,0.55); }
+.psStats__value{ font-size: 20px; font-weight: 1000; }
+.psStats__title{
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 950;
+  color: rgba(255,255,255,0.62);
+}
+.psStats__sub{ font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.45); }

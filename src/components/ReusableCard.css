@@ -1,0 +1,32 @@
+.reusableCard {
+  width: 100%;
+  border-radius: var(--nh-radius);
+  border: 1px solid var(--nh-border-soft);
+  color: var(--nh-white);
+  box-shadow: var(--nh-shadow-soft);
+  transition: 0.25s ease;
+}
+
+.reusableCard--dark {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+    var(--nh-panel);
+}
+
+.reusableCard--blue {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)),
+    var(--nh-card);
+}
+
+.reusableCard--light {
+  background: var(--nh-white);
+  color: var(--nh-dark-text);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.reusableCard--hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(254, 153, 91, 0.48);
+  box-shadow: var(--nh-shadow);
+}

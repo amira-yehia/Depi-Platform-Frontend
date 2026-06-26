@@ -1,0 +1,23 @@
+.market-section {
+  padding: 24px 0;
+  background: transparent;
+}
+
+.market-section__list {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* لو عايز الكروت تبقى جنب بعض في شاشة كبيرة بدل عمود (اختياري)
+   شغّل ده وحوّل flex-direction من column لـ row
+.market-section__list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+*/

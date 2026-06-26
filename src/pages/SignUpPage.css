@@ -1,0 +1,383 @@
+/* SignUpPage.css */
+
+/* optional: define vars if you don't already */
+:root {
+  --nh-navy: #062447;
+  --nh-orange: #ff7a2f;
+  --nh-orange-light: #ff8a3d;
+  --nh-white: #ffffff;
+  --nh-dark-text: #0b1724;
+}
+
+.signupPage {
+  position: relative;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: center;
+  gap: 22px;
+
+  padding: 90px 20px 60px;
+
+  background:
+    radial-gradient(circle at 28% 35%, rgba(254, 127, 50, 0.20), transparent 28%),
+    radial-gradient(circle at 58% 58%, rgba(63, 96, 137, 0.55), transparent 34%),
+    var(--nh-navy);
+
+  color: var(--nh-white);
+}
+
+/* logo like screenshot (top center) */
+.signupPage__logoWrap {
+  margin-top: -10px;
+}
+
+.signupPage__logo {
+  width: 190px;
+  height: auto;
+  display: block;
+}
+
+.signupCard {
+  width: min(520px, 100%);
+  padding: 44px 34px;
+  border-radius: 14px;
+
+  /* transparent blue card like screenshot */
+  background: rgba(6, 38, 71, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.35),
+    0 4px 0 rgba(255, 255, 255, 0.10);
+
+  backdrop-filter: blur(6px);
+}
+
+.signupCard__header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.signupCard__header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.signupCard__header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.signupForm__label {
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 950;
+  text-align: center;
+}
+
+/* two role cards */
+.signupRoleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.signupRoleCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-height: 116px;
+  padding: 16px;
+
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.42);
+
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.95);
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.signupRoleCard:hover {
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.signupRoleCard.is-active {
+  border-color: rgba(255, 122, 47, 0.95);
+  box-shadow: 0 10px 25px rgba(254, 127, 50, 0.12);
+}
+
+.signupRoleCard__icon {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 14px;
+  border-radius: 12px;
+
+  background: rgba(255, 122, 47, 0.95);
+  color: #0b1724;
+
+  font-size: 18px;
+}
+
+.signupRoleCard.is-active .signupRoleCard__icon {
+  background: rgba(255, 122, 47, 0.98);
+  color: #0b1724;
+}
+
+.signupRoleCard strong {
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.signupRoleCard small {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.signupField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signupField span {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.signupField__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.signupField__control i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.40);
+  font-size: 14px;
+}
+
+.signupField__control input {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 44px 0 42px;
+
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  outline: none;
+
+  background: rgba(7, 33, 60, 0.35);
+
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.signupField__control input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.signupField__control input:focus {
+  border-color: rgba(255, 122, 47, 0.95);
+  box-shadow: 0 0 0 3px rgba(254, 127, 50, 0.12);
+}
+
+/* eye toggle right */
+.signupField__toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+}
+
+.signupField__toggle i {
+  position: static;
+}
+
+.signupTerms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 12px;
+  padding: 12px 14px;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(7, 33, 60, 0.25);
+
+  min-height: 46px;
+}
+
+.signupTerms input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--nh-orange);
+}
+
+.signupTerms span {
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.signupTerms a {
+  color: var(--nh-orange);
+  font-weight: 950;
+  text-decoration: underline;
+}
+
+.signupSubmit {
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+
+  width: 100%;
+  background: var(--nh-orange);
+  color: var(--nh-white);
+
+  font-size: 14px;
+  font-weight: 950;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.signupSubmit:hover {
+  background: var(--nh-orange-light);
+  transform: translateY(-1px);
+}
+
+.signupSubmit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.signupStatus {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.signupStatus--success {
+  background: rgba(46, 204, 113, 0.18);
+  border: 1px solid rgba(46, 204, 113, 0.6);
+  color: rgba(210, 255, 229, 0.98);
+}
+
+.signupStatus--error {
+  background: rgba(255, 99, 71, 0.18);
+  border: 1px solid rgba(255, 99, 71, 0.62);
+  color: rgba(255, 228, 224, 0.98);
+}
+
+.signupBenefits {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 12px;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.signupBenefits h2 {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.signupBenefits ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 18px;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.signupBenefits li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* icon check circle style */
+.signupBenefits li i {
+  color: var(--nh-orange);
+  font-size: 14px;
+}
+
+.signupDivider {
+  margin-top: 18px;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.signupCard__footer {
+  margin: 18px 0 0;
+  text-align: center;
+
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.signupCard__footer a {
+  color: var(--nh-orange);
+  font-weight: 950;
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .signupCard {
+    padding: 34px 20px;
+  }
+
+  .signupRoleGrid,
+  .signupBenefits ul {
+    grid-template-columns: 1fr;
+  }
+}

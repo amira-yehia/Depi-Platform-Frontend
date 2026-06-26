@@ -1,0 +1,133 @@
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--nh-sidebar-width);
+  height: 100vh;
+  background: rgba(11, 38, 71, 0.96);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(63, 96, 137, 0.55);
+  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.18);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 40;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Chrome, Safari, current Edge */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(63, 96, 137, 0.72);
+}
+
+.sidebar-logo {
+  width: 190px;
+  height: auto;
+  display: block;
+}
+
+.sidebar-content {
+  flex: 1;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 16px;
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 15px;
+  font-weight: 700;
+  transition: 0.2s ease;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.sidebar-nav-link i {
+  width: 22px;
+  font-size: 17px;
+  text-align: center;
+  color: currentColor;
+}
+
+.sidebar-nav-link:hover,
+.sidebar-nav-link.active {
+  background: var(--nh-orange);
+  color: var(--nh-white);
+}
+
+.sidebar-nav-link--disabled {
+  opacity: 0.65;
+}
+
+.sidebar-nav-link--disabled:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.65);
+  cursor: not-allowed;
+}
+
+.sidebar-footer {
+  padding: 18px 16px;
+  border-top: 1px solid rgba(63, 96, 137, 0.72);
+}
+
+.sidebar-footer .sidebar-nav-link {
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-nav-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: var(--nh-sidebar-mobile-width);
+  }
+
+  .sidebar-header {
+    padding: 18px 12px;
+    text-align: center;
+  }
+
+  .sidebar-logo {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .sidebar-nav {
+    padding: 16px 10px;
+  }
+
+  .sidebar-nav-link {
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .sidebar-nav-link span {
+    display: none;
+  }
+
+  .sidebar-nav-link i {
+    width: auto;
+    font-size: 20px;
+  }
+}

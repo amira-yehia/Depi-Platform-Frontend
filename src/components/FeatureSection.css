@@ -1,0 +1,8 @@
+.featureSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 42px);
+}

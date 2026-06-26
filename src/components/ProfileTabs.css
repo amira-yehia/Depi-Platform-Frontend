@@ -1,0 +1,27 @@
+.ptTabs{
+  display: flex;
+  gap: 26px;
+  padding: 6px 8px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.22);
+  margin-bottom: 6px;
+}
+.ptTab{
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,0.60);
+  font-weight: 950;
+  cursor: pointer;
+  padding: 8px 0;
+}
+.ptTab.is-active{
+  color: #ff7a2f;
+  position: relative;
+}
+.ptTab.is-active::after{
+  content:"";
+  position: absolute;
+  left: 0; right: 0; bottom: -16px;
+  height: 3px;
+  background: #ff7a2f;
+  border-radius: 999px;
+}

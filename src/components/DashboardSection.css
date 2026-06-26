@@ -1,0 +1,123 @@
+/* =========================================
+   Dashboard Section Layout
+========================================= */
+.dashboardSection {
+    background-color: #0B1120;
+    padding: 60px 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ----------------------------------
+   Header
+----------------------------------- */
+.dashboardHeader {
+    text-align: left;
+}
+
+.dashboardHeader h1 {
+    background: linear-gradient(135deg, #FE995B 0%, #FF6B35 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ----------------------------------
+   Stats Grid (Top Row)
+----------------------------------- */
+.dashboardStatsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+/* ----------------------------------
+   Main Content Grid (Jobs + Contracts)
+----------------------------------- */
+.dashboardContentGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.sectionHeader h3 {
+    font-size: 20px;
+    letter-spacing: 0.3px;
+}
+
+/* ----------------------------------
+   Jobs List
+----------------------------------- */
+.jobsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ----------------------------------
+   Contracts List
+----------------------------------- */
+.contractsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.viewAllBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.viewAllBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================
+   Responsive Queries
+========================================= */
+@media (max-width: 1200px) {
+    .dashboardContentGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contractsList {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboardSection {
+        padding: 40px 0;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    .dashboardHeader h1 {
+        font-size: 28px !important;
+    }
+    
+    .dashboardStatsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contractsList {
+        grid-template-columns: 1fr;
+    }
+}

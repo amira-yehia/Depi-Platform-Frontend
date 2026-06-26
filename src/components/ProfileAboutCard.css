@@ -1,0 +1,19 @@
+.pac{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(10, 42, 72, 0.35);
+  padding: 18px;
+}
+.pac__title{
+  margin:0;
+  font-size: 20px;
+  font-weight: 1000;
+}
+.pac__desc, .pac__desc2{
+  margin-top: 10px;
+  color: rgba(255,255,255,0.72);
+  font-weight: 800;
+  line-height: 1.55;
+  font-size: 13.5px;
+}
+.pac__desc2{ margin-top: 14px; }
