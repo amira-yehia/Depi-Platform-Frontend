@@ -95,7 +95,10 @@ export async function apiFetch(path, options = {}) {
       errData?.detail ||
       (errData?.errors ? Object.values(errData.errors).flat()[0] : null) ||
       `Request failed: ${res.status}`;
-    throw new Error(msg);
+    const error = new Error(msg);
+    error.status = res.status;
+    error.data = errData;
+    throw error;
   }
 
   // 204 No Content
@@ -411,8 +414,22 @@ export const conversationsService = {
 export const profilesService = {
   me: () => apiFetch("/api/Profiles/me"),
 
-  update: (data) =>
-    apiFetch("/api/Profiles/me", { method: "PUT", body: JSON.stringify(data) }),
+  update: async (data) => {
+    const { isAvailable, ...profileData } = data;
+    const updatedProfile = await apiFetch("/api/Profiles/me", {
+      method: "PUT",
+      body: JSON.stringify(profileData),
+    });
+
+    if (typeof isAvailable === "boolean") {
+      await apiFetch("/api/Profiles/me/availability", {
+        method: "PUT",
+        body: JSON.stringify({ isAvailable }),
+      });
+    }
+
+    return updatedProfile;
+  },
 
   create: (data) =>
     apiFetch("/api/Profiles", { method: "POST", body: JSON.stringify(data) }),

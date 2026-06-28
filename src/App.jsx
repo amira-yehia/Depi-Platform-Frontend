@@ -42,6 +42,7 @@ function App() {
         <Route path="/projects"             element={wt(<FindProjectsPage />)} />
         <Route path="/projects/:projectId"  element={wt(<ProjectDetailsPage />)} />
         <Route path="/profile"              element={wt(<ProfilePage />)} />
+        <Route path="/profile/:userId"      element={wt(<ProfilePage />)} />
       </Route>
 
       {/* Fallback */}

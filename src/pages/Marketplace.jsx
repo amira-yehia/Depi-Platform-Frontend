@@ -65,48 +65,75 @@ export default function MarketplacePage() {
   const [talents, setTalents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ avgScore: 0, topMatches: 0 });
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    // Try AI top freelancers first, fall back to available profiles
-    aiService.topFreelancers()
-      .then((data) => {
-        const list = Array.isArray(data) ? data : [];
-        return list;
-      })
-      .catch(() =>
-        profilesService.available({ pageSize: 20 }).then((d) => Array.isArray(d) ? d : [])
-      )
-      .then((list) => {
-        const normalized = list.map((f, i) => {
-          const score = f.profileScore || f.matchScore || f.score || Math.round(65 + Math.random() * 30);
-          const name = f.fullName || f.displayName || f.name || `Freelancer ${i + 1}`;
-          const initials = name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
-          return {
-            id: f.id || f.userId || i,
-            userId: f.id || f.userId,
-            name,
-            initials,
-            role: f.title || "Freelancer",
-            score,
-            scoreLabel: score >= 90 ? "Excellent" : score >= 80 ? "Good" : "Fair",
-            rate: f.hourlyRate ? `$${f.hourlyRate}/hr` : null,
-            location: f.country || f.location || null,
-            rating: f.averageRating || f.rating || null,
-            availability: f.isAvailable ? "Available now" : "Not available",
-            avatarUrl: f.profileImageUrl || null,
-            tags: Array.isArray(f.skills) ? f.skills.map((s) => s.nameEn || s.name || s) : [],
-            stats: `Score ${score}%`,
-            category: f.specialization || f.category || "Other",
-          };
-        });
-        setTalents(normalized);
-        const topMatches = normalized.filter((t) => t.score >= 85).length;
-        const avgScore = normalized.length ? Math.round(normalized.reduce((sum, t) => sum + t.score, 0) / normalized.length) : 0;
-        setStats({ avgScore, topMatches });
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+    const timeoutId = setTimeout(() => {
+      const loadTalents = async () => {
+        setLoading(true);
+        try {
+          // Try AI top freelancers first for page 1 with no search, then fall back to available
+          let data = null;
+          
+          if (!search && page === 1) {
+            data = await aiService.topFreelancers().catch(() => null);
+          }
+          
+          if (!data) {
+            // Use available profiles API with search and pagination
+            const response = await profilesService.available({
+              search: search || undefined,
+              page,
+              pageSize,
+            });
+            data = Array.isArray(response) ? response : [];
+          } else {
+            data = Array.isArray(data) ? data : [];
+          }
+
+          const normalized = data.map((f, i) => {
+            const score = f.profileScore || f.matchScore || f.score || Math.round(65 + Math.random() * 30);
+            const name = f.fullName || f.displayName || f.name || `Freelancer ${i + 1}`;
+            const initials = name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+            return {
+              id: f.id || f.userId || i,
+              userId: f.id || f.userId,
+              name,
+              initials,
+              role: f.title || "Freelancer",
+              score,
+              scoreLabel: score >= 90 ? "Excellent" : score >= 80 ? "Good" : "Fair",
+              rate: f.hourlyRate ? `$${f.hourlyRate}/hr` : null,
+              location: f.country || f.location || null,
+              rating: f.averageRating || f.rating || null,
+              availability: f.isAvailable ? "Available now" : "Not available",
+              avatarUrl: f.profileImageUrl || null,
+              tags: Array.isArray(f.skills) ? f.skills.map((s) => s.nameEn || s.name || s) : [],
+              stats: `Score ${score}%`,
+              category: f.specialization || f.category || "Other",
+            };
+          });
+          
+          setTalents(normalized);
+          setTotalCount(normalized.length);
+          const topMatches = normalized.filter((t) => t.score >= 85).length;
+          const avgScore = normalized.length ? Math.round(normalized.reduce((sum, t) => sum + t.score, 0) / normalized.length) : 0;
+          setStats({ avgScore, topMatches });
+        } catch (err) {
+          console.error("Failed to load talents:", err);
+          setTalents([]);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadTalents();
+    }, 300); // Debounce search input
+
+    return () => clearTimeout(timeoutId);
+  }, [search, page, pageSize]);
 
   const filtered = talents.filter((t) => {
     const matchesTab = activeTab === "All" || t.category === activeTab;
