@@ -17,6 +17,16 @@ export default function ProfileHeader({ profile }) {
           </div>
 
           <div className="phRole">{profile.roleTitle}</div>
+          {profile.contactItems?.length > 0 && (
+            <div className="phContactRow">
+              {profile.contactItems.map((item, index) => (
+                <span className="phContactItem" key={index}>
+                  <i className={item.icon} aria-hidden="true" />
+                  {item.text}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="phProfileCompletion">
             <div className="d-flex justify-content-between mb-2">
               <span>Profile Completion</span>
@@ -33,12 +43,50 @@ export default function ProfileHeader({ profile }) {
             </div>
           </div>
           <div className="phMetaRow">
-            {profile.metaRow.map((m, i) => (
-              <span className="phMetaItem" key={i}>
-                <i className={m.icon} aria-hidden="true" />
-                {m.text}
-              </span>
-            ))}
+            {profile.metaRow.map((m, i) => {
+              const content = (
+                <>
+                  <i className={m.icon} aria-hidden="true" />
+                  {!m.isSocial && m.text}
+                </>
+              );
+
+              if (m.disabled) {
+                return (
+                  <button
+                    className={`phMetaItem phMetaSocial ${m.disabled ? "phMetaSocialDisabled" : ""}`}
+                    key={i}
+                    type="button"
+                    disabled
+                    title={m.disabledMessage}
+                    aria-label={m.disabledMessage}
+                  >
+                    {content}
+                  </button>
+                );
+              }
+
+              if (m.url) {
+                return (
+                  <a
+                    className={`phMetaItem ${m.isSocial ? "phMetaSocial" : ""}`}
+                    key={i}
+                    href={m.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={m.ariaLabel || m.text}
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return (
+                <span className="phMetaItem" key={i}>
+                  {content}
+                </span>
+              );
+            })}
           </div>
         </div>
 

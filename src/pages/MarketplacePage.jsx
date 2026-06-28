@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MarketplacePage.css";
 import MarketplaceView from "../components/MarketPlace/MarketplaceView";
-import { jobsService, bookmarksService } from "../services/api";
+import { profilesService, bookmarksService } from "../services/api";
 
 export default function MarketplacePage() {
   const navigate = useNavigate();
@@ -12,31 +12,31 @@ export default function MarketplacePage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  // Load jobs + bookmarks in parallel
+  // Load available profiles + bookmarks in parallel
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      jobsService.list({ searchTerm: search || undefined, page, pageSize: 20 }),
+      profilesService.available({ search: search || undefined, page, pageSize: 20 }),
       bookmarksService.ids().catch(() => []),
     ])
-      .then(([jobsData, bIds]) => {
-        const list = Array.isArray(jobsData) ? jobsData : [];
+      .then(([profilesData, bIds]) => {
+        const list = Array.isArray(profilesData) ? profilesData : [];
         setBookmarkedIds(Array.isArray(bIds) ? bIds : []);
-        setProjects(list.map((j) => ({
-          id: j.id,
-          title: j.title,
-          description: j.description || "",
-          tags: j.skillsRequired
-            ? j.skillsRequired.split(",").map((s) => s.trim()).filter(Boolean)
+        setProjects(list.map((profile, index) => ({
+          id: profile.id || profile.userId || `profile-${index}`,
+          title: profile.displayName || profile.fullName || profile.name || `Freelancer ${index + 1}`,
+          description: profile.title || profile.bio || "",
+          tags: Array.isArray(profile.skills)
+            ? profile.skills.map((s) => s.nameEn || s.name || s)
             : [],
-          budgetMin: j.budgetMin || 0,
-          budgetMax: j.budgetMax || 0,
-          postedAgo: j.createdAt ? new Date(j.createdAt).toLocaleDateString() : "Recently",
-          proposalsCount: j.applicationsCount || 0,
-          matchScore: Math.round(65 + Math.random() * 30),
-          isBookmarked: j.isBookmarked,
-          hasApplied: j.hasApplied,
-          location: j.isRemote ? "Remote" : (j.location || ""),
+          budgetMin: profile.hourlyRate || 0,
+          budgetMax: profile.hourlyRate || 0,
+          postedAgo: profile.lastActiveAt ? new Date(profile.lastActiveAt).toLocaleDateString() : "Recently",
+          proposalsCount: profile.projectCount || profile.completedProjects || 0,
+          matchScore: profile.profileScore || Math.round(65 + Math.random() * 30),
+          isBookmarked: profile.isBookmarked || false,
+          hasApplied: false,
+          location: profile.country || profile.location || "",
         })));
       })
       .catch(() => {})

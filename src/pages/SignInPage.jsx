@@ -99,7 +99,13 @@ export default function SignInPage() {
       setStatusType("success");
       navigate("/dashboard", { state: { userName: fullName } });
     } catch (error) {
-      setStatusMessage(error.message || "Failed to sign in.");
+      const rawMessage = error?.message || "Failed to sign in.";
+      const isWrongPassword = error?.status === 400 || error?.status === 401 || /password|incorrect|invalid/i.test(rawMessage);
+      setStatusMessage(
+        isWrongPassword
+          ? "The password you entered is incorrect. Please try again."
+          : rawMessage
+      );
       setStatusType("error");
     } finally {
       setIsSubmitting(false);
