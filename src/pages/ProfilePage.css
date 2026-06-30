@@ -204,3 +204,32 @@
   font-size: 14px;
   font-weight: 600;
 }
+
+/* ── Modal X close button ── */
+.modalCloseBtn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.modalCloseBtn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* Make skillModal position:relative so X can be absolute */
+.skillModal {
+  position: relative;
+}

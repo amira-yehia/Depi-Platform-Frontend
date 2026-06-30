@@ -1,39 +1,101 @@
-.pworkShell{
+.pworkShell {
   border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(10, 42, 72, 0.35);
   padding: 18px;
 }
-.pworkShell__head{
-  display:flex;
+.pworkShell__head {
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
-.pworkShell__title{
-  margin:0;
+.pworkShell__title {
+  margin: 0;
   font-size: 20px;
   font-weight: 1000;
 }
-.pworkShell__sub{
+.pworkShell__sub {
   margin-top: 6px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 850;
   font-size: 13px;
 }
-.pworkShell__right{
+.pworkShell__right {
   color: #ff7a2f;
   font-weight: 950;
-  cursor:pointer;
+  cursor: pointer;
   padding-top: 8px;
   white-space: nowrap;
 }
-.pworkShell__grid{
+.pworkShell__grid {
   margin-top: 14px;
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-@media (max-width: 980px){
-  .pworkShell__grid{ grid-template-columns: 1fr; }
+@media (max-width: 980px) {
+  .pworkShell__grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ── Add button ── */
+.pworkShell__addBtn {
+  background: #ff8a34;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+.pworkShell__addBtn:hover {
+  opacity: 0.85;
+}
+
+/* ── Item wrapper with action buttons ── */
+.pworkShell__itemWrap {
+  position: relative;
+}
+.pworkShell__itemActions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.pworkShell__itemWrap:hover .pworkShell__itemActions {
+  opacity: 1;
+}
+.pworkShell__editBtn,
+.pworkShell__deleteBtn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.pworkShell__editBtn {
+  background: rgba(255, 138, 52, 0.85);
+  color: #fff;
+}
+.pworkShell__deleteBtn {
+  background: rgba(239, 68, 68, 0.85);
+  color: #fff;
+}
+.pworkShell__editBtn:hover {
+  background: #ff8a34;
+}
+.pworkShell__deleteBtn:hover {
+  background: #dc2626;
 }

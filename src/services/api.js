@@ -811,6 +811,10 @@ export const usersService = {
 // ─────────────────────────────────────────────────────────────────────────────
 // ESCROWS
 // ─────────────────────────────────────────────────────────────────────────────
+export const countriesService = {
+  list: () => apiFetch("/api/Countries"),
+};
+
 export const escrowsService = {
   list: () => apiFetch("/api/escrows"),
 };
@@ -839,4 +843,5 @@ export default {
   communityService,
   usersService,
   escrowsService,
+  countriesService,
 };
