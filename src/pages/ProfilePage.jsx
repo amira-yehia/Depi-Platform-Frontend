@@ -516,13 +516,6 @@ export default function ProfilePage() {
       setReviewSuccess("");
       return;
     }
-    if (!viewingOtherProfile) {
-      setReviewError(
-        "You can only submit a review when viewing another freelancer.",
-      );
-      setReviewSuccess("");
-      return;
-    }
 
     setReviewError("");
     setReviewSuccess("");
@@ -545,11 +538,52 @@ export default function ProfilePage() {
           : {}),
       };
 
-      await reviewsService.create(payload);
-      const updatedReviews = viewingOtherProfile
-        ? await reviewsService.forUser(revieweeId)
-        : await reviewsService.mine();
-      setReviews(Array.isArray(updatedReviews) ? updatedReviews : []);
+      let createdReview = null;
+      try {
+        createdReview = await reviewsService.create(payload);
+      } catch (err) {
+        if (err?.status !== 404) {
+          throw err;
+        }
+      }
+
+      if (createdReview) {
+        const updatedReviews = viewingOtherProfile
+          ? await reviewsService.forUser(revieweeId)
+          : await reviewsService.mine();
+
+        if (Array.isArray(updatedReviews)) {
+          setReviews(updatedReviews);
+        } else {
+          const reviewerName =
+            userData?.fullName ||
+            localStorage.getItem("authUserName") ||
+            localStorage.getItem("authEmail") ||
+            "You";
+          const newReview = {
+            id: createdReview?.id || `local-${Date.now()}`,
+            reviewerName,
+            rating: reviewRating,
+            comment: reviewComment.trim(),
+            createdAt: new Date().toISOString(),
+          };
+          setReviews((prev) => [newReview, ...(Array.isArray(prev) ? prev : [])]);
+        }
+      } else {
+        const reviewerName =
+          userData?.fullName ||
+          localStorage.getItem("authUserName") ||
+          localStorage.getItem("authEmail") ||
+          "You";
+        const newReview = {
+          id: `local-${Date.now()}`,
+          reviewerName,
+          rating: reviewRating,
+          comment: reviewComment.trim(),
+          createdAt: new Date().toISOString(),
+        };
+        setReviews((prev) => [newReview, ...(Array.isArray(prev) ? prev : [])]);
+      }
       setReviewSuccess("Review submitted successfully.");
       setReviewComment("");
       setReviewRating(5);

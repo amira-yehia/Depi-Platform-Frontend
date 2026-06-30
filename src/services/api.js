@@ -588,7 +588,16 @@ export const reviewsService = {
     );
   },
 
-  mine: () => apiFetch("/api/Reviews/me"),
+  mine: () =>
+    apiFetch("/api/Reviews/me").catch((err) => {
+      if (err?.status === 404) {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+          return apiFetch(`/api/Reviews/user/${userId}`);
+        }
+      }
+      throw err;
+    }),
   delete: (id) => apiFetch(`/api/Reviews/${id}`, { method: "DELETE" }),
 };
 
