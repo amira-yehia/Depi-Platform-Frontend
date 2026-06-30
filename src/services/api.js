@@ -582,11 +582,22 @@ export const reviewsService = {
     }),
 
   forUser: (userId, params = {}) => {
-    const q = new URLSearchParams({ ...params });
-    return apiFetch(`/api/Reviews/user/${userId}?${q}`);
+    const query = new URLSearchParams({ ...params }).toString();
+    return apiFetch(
+      `/api/Reviews/user/${userId}${query ? `?${query}` : ""}`,
+    );
   },
 
-  mine: () => apiFetch("/api/Reviews/me"),
+  mine: () =>
+    apiFetch("/api/Reviews/me").catch((err) => {
+      if (err?.status === 404) {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+          return apiFetch(`/api/Reviews/user/${userId}`);
+        }
+      }
+      throw err;
+    }),
   delete: (id) => apiFetch(`/api/Reviews/${id}`, { method: "DELETE" }),
 };
 

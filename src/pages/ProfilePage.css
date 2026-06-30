@@ -233,3 +233,52 @@
 .skillModal {
   position: relative;
 }
+
+.reviewForm {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.reviewForm h3 {
+  margin: 0 0 10px;
+  color: #f8fafc;
+}
+
+.reviewForm label {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+.reviewForm textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.reviewForm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reviewError,
+.reviewMessage {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.reviewError {
+  background: rgba(248, 113, 113, 0.15);
+  color: #fecaca;
+}
+
+.reviewMessage {
+  background: rgba(34, 197, 94, 0.16);
+  color: #a7f3d0;
+}

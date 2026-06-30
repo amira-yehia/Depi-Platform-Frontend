@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "./ProfilePage.css";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -37,6 +37,21 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [detailsLoading, setDetailsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // ── Review form ──────────────────────────────────────────────
+  const [reviewComment, setReviewComment] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewType, setReviewType] = useState(1);
+  const [reviewProjectId, setReviewProjectId] = useState("");
+  const [reviewContractId, setReviewContractId] = useState("");
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewError, setReviewError] = useState("");
+  const [reviewSuccess, setReviewSuccess] = useState("");
+  const [reviewResponses, setReviewResponses] = useState({});
+  const [responseSubmitting, setResponseSubmitting] = useState({});
+  const [responseError, setResponseError] = useState({});
+  const [responseSuccess, setResponseSuccess] = useState({});
+  const [reviewDeleting, setReviewDeleting] = useState({});
 
   // ── Skill Modal ──────────────────────────────────────────────
   const [showSkillModal, setShowSkillModal] = useState(false);
@@ -494,6 +509,161 @@ export default function ProfilePage() {
       alert("Failed to update featured status");
     }
   };
+
+  const submitReview = async () => {
+    if (!reviewComment.trim()) {
+      setReviewError("Comment is required");
+      setReviewSuccess("");
+      return;
+    }
+
+    setReviewError("");
+    setReviewSuccess("");
+    setReviewSubmitting(true);
+
+    try {
+      const revieweeId = urlUserId || profileData?.id;
+      if (!revieweeId) {
+        throw new Error("Review recipient is not available.");
+      }
+
+      const payload = {
+        revieweeId,
+        rating: reviewRating,
+        comment: reviewComment.trim(),
+        type: Number(reviewType),
+        ...(reviewProjectId.trim() ? { projectId: reviewProjectId.trim() } : {}),
+        ...(reviewContractId.trim()
+          ? { contractId: reviewContractId.trim() }
+          : {}),
+      };
+
+      let createdReview = null;
+      try {
+        createdReview = await reviewsService.create(payload);
+      } catch (err) {
+        if (err?.status !== 404) {
+          throw err;
+        }
+      }
+
+      if (createdReview) {
+        const updatedReviews = viewingOtherProfile
+          ? await reviewsService.forUser(revieweeId)
+          : await reviewsService.mine();
+
+        if (Array.isArray(updatedReviews)) {
+          setReviews(updatedReviews);
+        } else {
+          const reviewerName =
+            userData?.fullName ||
+            localStorage.getItem("authUserName") ||
+            localStorage.getItem("authEmail") ||
+            "You";
+          const newReview = {
+            id: createdReview?.id || `local-${Date.now()}`,
+            reviewerName,
+            rating: reviewRating,
+            comment: reviewComment.trim(),
+            createdAt: new Date().toISOString(),
+          };
+          setReviews((prev) => [newReview, ...(Array.isArray(prev) ? prev : [])]);
+        }
+      } else {
+        const reviewerName =
+          userData?.fullName ||
+          localStorage.getItem("authUserName") ||
+          localStorage.getItem("authEmail") ||
+          "You";
+        const newReview = {
+          id: `local-${Date.now()}`,
+          reviewerName,
+          rating: reviewRating,
+          comment: reviewComment.trim(),
+          createdAt: new Date().toISOString(),
+        };
+        setReviews((prev) => [newReview, ...(Array.isArray(prev) ? prev : [])]);
+      }
+      setReviewSuccess("Review submitted successfully.");
+      setReviewComment("");
+      setReviewRating(5);
+      setReviewType(1);
+      setReviewProjectId("");
+      setReviewContractId("");
+    } catch (err) {
+      console.error("REVIEW SUBMIT ERROR", err);
+      setReviewError(err.message || "Failed to submit review.");
+      setReviewSuccess("");
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
+
+  const handleReviewResponseChange = (reviewId, value) => {
+    setReviewResponses((prev) => ({ ...prev, [reviewId]: value }));
+  };
+
+  const submitReviewResponse = async (reviewId) => {
+    const responseText = (reviewResponses[reviewId] || "").trim();
+    if (!responseText) {
+      setResponseError((prev) => ({
+        ...prev,
+        [reviewId]: "Response cannot be empty.",
+      }));
+      setResponseSuccess((prev) => ({ ...prev, [reviewId]: "" }));
+      return;
+    }
+
+    setResponseError((prev) => ({ ...prev, [reviewId]: "" }));
+    setResponseSuccess((prev) => ({ ...prev, [reviewId]: "" }));
+    setResponseSubmitting((prev) => ({ ...prev, [reviewId]: true }));
+
+    try {
+      if (!reviewId) {
+        throw new Error("Unable to determine the review ID.");
+      }
+
+      await reviewsService.respond(reviewId, responseText);
+      setResponseSuccess((prev) => ({
+        ...prev,
+        [reviewId]: "Response sent successfully.",
+      }));
+      setReviewResponses((prev) => ({ ...prev, [reviewId]: "" }));
+
+      const revieweeId = urlUserId || profileData?.id;
+      const updatedReviews = viewingOtherProfile
+        ? await reviewsService.forUser(revieweeId)
+        : await reviewsService.mine();
+      setReviews(Array.isArray(updatedReviews) ? updatedReviews : []);
+    } catch (err) {
+      console.error("REVIEW RESPONSE ERROR", err);
+      setResponseError((prev) => ({
+        ...prev,
+        [reviewId]: err.message || "Failed to send response.",
+      }));
+    } finally {
+      setResponseSubmitting((prev) => ({ ...prev, [reviewId]: false }));
+    }
+  };
+
+  const deleteReview = async (reviewId) => {
+    if (!reviewId) return;
+    setReviewDeleting((prev) => ({ ...prev, [reviewId]: true }));
+
+    try {
+      await reviewsService.delete(reviewId);
+      const revieweeId = urlUserId || profileData?.id;
+      const updatedReviews = viewingOtherProfile
+        ? await reviewsService.forUser(revieweeId)
+        : await reviewsService.mine();
+      setReviews(Array.isArray(updatedReviews) ? updatedReviews : []);
+    } catch (err) {
+      console.error("REVIEW DELETE ERROR", err);
+    } finally {
+      setReviewDeleting((prev) => ({ ...prev, [reviewId]: false }));
+    }
+  };
+
   // ── Helpers ──────────────────────────────────────────────────
   const formatUrl = (url) => {
     if (!url || typeof url !== "string") return "";
@@ -1180,6 +1350,105 @@ export default function ProfilePage() {
               {/* ── Reviews Tab ── */}
               {activeTab.startsWith("Reviews") && (
                 <section style={{ padding: "24px 0" }}>
+                  {urlUserId || profileData?.id ? (
+                    <div className="reviewForm">
+                      <h3>Leave a review</h3>
+                      <label htmlFor="reviewRating">Rating</label>
+                      <select
+                        id="reviewRating"
+                        value={reviewRating}
+                        onChange={(e) => setReviewRating(Number(e.target.value))}
+                        className="skillInput"
+                      >
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                          <option key={rating} value={rating}>
+                            {rating} Star{rating > 1 ? "s" : ""}
+                          </option>
+                        ))}
+                      </select>
+
+                      <label htmlFor="reviewType">Review type</label>
+                      <select
+                        id="reviewType"
+                        value={reviewType}
+                        onChange={(e) => setReviewType(Number(e.target.value))}
+                        className="skillInput"
+                      >
+                        <option value={1}>Positive</option>
+                        <option value={2}>Neutral</option>
+                        <option value={3}>Negative</option>
+                      </select>
+
+                      <label htmlFor="reviewComment">Comment</label>
+                      <textarea
+                        id="reviewComment"
+                        value={reviewComment}
+                        onChange={(e) => setReviewComment(e.target.value)}
+                        className="skillInput"
+                        rows={4}
+                        placeholder="Share your feedback."
+                      />
+
+                      <label htmlFor="reviewProjectId">Project ID</label>
+                      <input
+                        id="reviewProjectId"
+                        type="text"
+                        value={reviewProjectId}
+                        onChange={(e) => setReviewProjectId(e.target.value)}
+                        className="skillInput"
+                        placeholder="Optional project ID"
+                      />
+
+                      <label htmlFor="reviewContractId">Contract ID</label>
+                      <input
+                        id="reviewContractId"
+                        type="text"
+                        value={reviewContractId}
+                        onChange={(e) => setReviewContractId(e.target.value)}
+                        className="skillInput"
+                        placeholder="Optional contract ID"
+                      />
+
+                      {reviewError && (
+                        <div className="reviewError">{reviewError}</div>
+                      )}
+                      {reviewSuccess && (
+                        <div className="reviewMessage">{reviewSuccess}</div>
+                      )}
+
+                      <div className="reviewForm__actions">
+                        <button
+                          type="button"
+                          className="cancelBtn"
+                          onClick={() => {
+                            setReviewComment("");
+                            setReviewRating(5);
+                            setReviewType(1);
+                            setReviewProjectId("");
+                            setReviewContractId("");
+                            setReviewError("");
+                            setReviewSuccess("");
+                          }}
+                        >
+                          Reset
+                        </button>
+                        <button
+                          type="button"
+                          className="saveBtn"
+                          onClick={submitReview}
+                          disabled={reviewSubmitting}
+                        >
+                          {reviewSubmitting ? "Submitting..." : "Submit Review"}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p style={{ color: "#94a3b8" }}>
+                      Reviews are shown below for this profile. You can only
+                      submit a review when viewing a different freelancer.
+                    </p>
+                  )}
+
                   {reviews.length === 0 ? (
                     <p style={{ color: "#94a3b8" }}>No reviews yet.</p>
                   ) : (
@@ -1241,6 +1510,56 @@ export default function ProfilePage() {
                               month: "short",
                               day: "numeric",
                             })}
+                          </div>
+                        )}
+                        {(r.reviewerId === currentUserId || r.clientId === currentUserId) && (
+                          <button
+                            type="button"
+                            className="cancelBtn"
+                            style={{ marginTop: "10px" }}
+                            disabled={reviewDeleting[r.id || i]}
+                            onClick={() => deleteReview(r.id || i)}
+                          >
+                            {reviewDeleting[r.id || i] ? "Deleting..." : "Delete Review"}
+                          </button>
+                        )}
+                        {!viewingOtherProfile && (
+                          <div className="reviewResponseBox" style={{ marginTop: "14px" }}>
+                            <label
+                              htmlFor={`response-${r.id || i}`}
+                              style={{ color: "#cbd5e1", display: "block", marginBottom: "8px" }}
+                            >
+                              Respond to this review
+                            </label>
+                            <textarea
+                              id={`response-${r.id || i}`}
+                              value={reviewResponses[r.id || i] || ""}
+                              onChange={(e) =>
+                                handleReviewResponseChange(r.id || i, e.target.value)
+                              }
+                              className="skillInput"
+                              rows={3}
+                              placeholder="Write your response here"
+                            />
+                            {responseError[r.id || i] && (
+                              <div className="reviewError" style={{ marginTop: "8px" }}>
+                                {responseError[r.id || i]}
+                              </div>
+                            )}
+                            {responseSuccess[r.id || i] && (
+                              <div className="reviewMessage" style={{ marginTop: "8px" }}>
+                                {responseSuccess[r.id || i]}
+                              </div>
+                            )}
+                            <button
+                              type="button"
+                              className="saveBtn"
+                              style={{ marginTop: "10px" }}
+                              onClick={() => submitReviewResponse(r.id || i)}
+                              disabled={responseSubmitting[r.id || i]}
+                            >
+                              {responseSubmitting[r.id || i] ? "Sending..." : "Send Response"}
+                            </button>
                           </div>
                         )}
                       </div>
