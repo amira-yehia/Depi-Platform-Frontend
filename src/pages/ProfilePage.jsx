@@ -719,18 +719,18 @@ export default function ProfilePage() {
           : "Currently not available.",
         buttonText: "Hire Now",
       },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
-    [
-      profileData,
-      userData,
-      apiSkills,
-      portfolioItems,
-      reviews,
-      viewingOtherProfile,
-      avatarUrl,
-      fullName,
-    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // [
+    //   profileData,
+    //   userData,
+    //   apiSkills,
+    //   portfolioItems,
+    //   reviews,
+    //   viewingOtherProfile,
+    //   avatarUrl,
+    //   fullName,
+    // ],
   );
 
   // ── Render helpers ────────────────────────────────────────────
